@@ -38,8 +38,7 @@ if ($result->num_rows > 0) {
         $_SESSION['email'] = $row['email'];
         $_SESSION['tipo'] = $row['tipo'];
         $estado = $row['estado'];
-        $_SESSION['servicio_id'] = $row['servicio_id'];
-        $_SESSION['profesional_id'] = $row['profesional_id'];
+       
     }
 
     if ($estado == 1) {

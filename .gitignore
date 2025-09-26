@@ -1,2 +1,5 @@
 config/database.php
+public/assets/img/*
+public/assets/media/imagenes/*
+public/assets/media/videos/*
 

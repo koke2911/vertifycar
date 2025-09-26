@@ -3,6 +3,11 @@ session_start();
 include("../config/variables.php");
 $userName = $_SESSION['rut_usuario'] . ' ' . $_SESSION['nombre_usuario'];
 
+if (empty($_SESSION)) {
+    header("Location: ../index.php");
+    exit();
+}
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -155,10 +160,12 @@ $userName = $_SESSION['rut_usuario'] . ' ' . $_SESSION['nombre_usuario'];
             <div class="mb-2 text-muted small">Menú principal</div>
             <nav class="nav flex-column">
                 <a href="#" class="nav-link active" data-target="dashboard.html"><i class="fas fa-tachometer-alt mr-2"></i>Resumen</a>
-                <a href="#" class="nav-link" data-target="usuarios.html"><i class="fas fa-users mr-2"></i>Usuarios</a>
-                <a href="#" class="nav-link" data-target="servicios.html"><i class="fas fa-tools mr-2"></i>Servicios</a>
+                <a href="#" class="nav-link" data-target="usuarios.php"><i class="fas fa-users mr-2"></i>Usuarios</a>
+                <a href="#" class="nav-link" data-target="servicios.php"><i class="fas fa-tools mr-2"></i>Servicios</a>
                 <a href="#" class="nav-link" data-target="solicitudes.html"><i class="fas fa-clipboard-check mr-2"></i>Solicitudes</a>
-                <a href="#" class="nav-link" data-target="multimedia.html"><i class="far fa-image mr-2"></i>Multimedia</a>
+                <a href="#" class="nav-link" data-target="multimedia.php"><i class="far fa-image mr-2"></i>Multimedia</a>
+                <a href="#" class="nav-link" data-target="faq.php"><i class="far fa-question mr-2"></i>FAQ</a>
+                <a href="#" class="nav-link" data-target="multimedia.html"><i class="far fa-message mr-2"></i>mensajes</a>
             </nav>
 
             <hr>
@@ -204,7 +211,7 @@ $userName = $_SESSION['rut_usuario'] . ' ' . $_SESSION['nombre_usuario'];
     <script type="text/javascript" src="../public/assets/js/libs/js/Multiple-Select/dist/js/bootstrap-multiselect.min.js"></script>
     <script type="text/javascript" src="../public/assets/js/libs/js/bootstrap-select/js/bootstrap-select.min.js"></script>
 
-    <script src="../public/assets/js/principal.js?v=<?php echo 5; ?>"></script>
+    <script src="../public/assets/js/principal.js?v=<?php echo $version; ?>"></script>
 
 
 </body>
