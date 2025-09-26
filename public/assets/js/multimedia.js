@@ -120,7 +120,7 @@ function mmRenderCards(items) {
           <div class="card-actions mt-3">
             ${String(m.estado) === '1'
                 ? `<button class="btn btn-sm btn-outline-secondary" onclick="mmCambiarEstado(${m.id},0)"><i class="fas fa-ban mr-1"></i> Desactivar</button>`
-                : `<button class="btn btn-sm btn-success" onclick="mmCambiarEstado(${m.id},1)"><i class="fas a-check mr-1"></i> Activar</button>`}
+            : `<button class="btn btn-sm btn-success" onclick="mmCambiarEstado(${m.id},1)"><i class="fas fa-trash mr-1"></i> Activar</button>`}
             <button class="btn btn-sm btn-primary" onclick="mmAbrirEditar(${m.id})"><i class="fas fa-pencil-alt mr-1"></i></button>
             <button class="btn btn-sm btn-danger" onclick="mmEliminar(${m.id})"><i class="fas fa-trash mr-1"></i></button>
           </div>

@@ -1,49 +1,44 @@
 <?php
 session_start();
+header('Content-Type: application/json; charset=utf-8');
 
-$conn = new mysqli($_SESSION['servername'], $_SESSION['username'], $_SESSION['password'], $_SESSION['dbname'], $_SESSION['port']);
-
+$conn = new mysqli(
+    $_SESSION['servername'],
+    $_SESSION['username'],
+    $_SESSION['password'],
+    $_SESSION['dbname'],
+    $_SESSION['port']
+);
 $conn->set_charset("utf8mb4");
-
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    http_response_code(500);
+    echo json_encode(['error' => 'Connection failed: ' . $conn->connect_error], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
-// echo 'aqui';
-$sql = "SELECT  
-    u.id,
-    u.rut,
-    u.nombre,
-    u.apellidos,
-    u.contacto AS fono,
-    u.email AS correo,
-    u.estado,
-    CASE 
-        WHEN u.estado = 1 THEN 'Activo' 
-        ELSE 'Inactivo' 
-    END AS estado_glosa,
-    tu.id AS rol_id,
-    tu.glosa AS rol
+$sql = "
+SELECT
+  u.id,
+  u.rut,
+  u.nombre,
+  u.apellidos,
+  u.contacto AS fono,
+  u.email    AS correo,
+  u.estado,
+  CASE WHEN u.estado = 1 THEN 'Activo' ELSE 'Inactivo' END AS estado_glosa,
+  tu.id      AS rol_id,
+  tu.glosa   AS rol
 FROM usuarios u
-INNER JOIN tipos_usuario tu ON tu.id = u.tipo;
+INNER JOIN tipos_usuario tu ON tu.id = u.tipo
+ORDER BY u.id DESC
 ";
-$result = $conn->query($sql);
 
-$filas = [];
-
-
-if ($result->num_rows > 0) {
-
-    while ($row = $result->fetch_assoc()) {
-
-
-        $filas[] = $row;
-    }
+$res = $conn->query($sql);
+$data = [];
+if ($res) {
+    while ($r = $res->fetch_assoc()) $data[] = $r;
+    $res->free();
 }
-// print_r($filas);
-if (empty($filas)) {
-    echo json_encode(['data' => '']);
-} else {
 
-    echo json_encode(['data' => $filas]);
-}
+echo json_encode(['data' => $data], JSON_UNESCAPED_UNICODE);
+$conn->close();
